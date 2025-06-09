@@ -24,10 +24,16 @@ Exercising full-stack proficiency; backend workflows, structured data storage, a
 ```
 ## Tasks in Detail
 - **Data Cleaning & Processing:**  
-Parse the XML using Python/JS libraries, categorize SMS by transaction type (e.g., payments, deposits, withdrawals), normalize fields (amounts, dates, phone numbers), and log unprocessed messages.
+  - Parse the XML using Python ml.etree.ElementTree library
+  - Categorize SMS by transaction type (e.g., payments, deposits, withdrawals)
+  - Normalize fields (amounts, dates, phone numbers), and
+  - Log unprocessed messages.
 - **Database Design:**  
-Design a relational schema (SQLite/MySQL/PostgreSQL) to store cleaned transactions with fields like ID, type, amount, parties, and timestamp. Ensure data integrity, handle duplicates, and insert via script.
+  - Design a relational schema (SMySQL) to store cleaned transactions with fields like ID, type, amount, parties, and timestamp.
+  - Ensure data integrity, Handle duplicates, and insert via script.
 - **Frontend Dashboard:**  
-Build an interactive dashboard (HTML/CSS/JS) with search, filters, and data visualizations (e.g., volume by type, monthly summaries) using libraries like Chart.js or D3.js.
+  - Build an interactive dashboard (HTML/CSS/JS) with
+  - Search, filters, and data visualizations (e.g., volume by type, monthly summaries) using libraries like Chart.js or D3.js.
 - **Backend API:**  
-Create a REST API (Flask, FastAPI, or Node.js) to serve all, filtered, or summarized transactions. Connect it to the dashboard with async requests.
+  - Create a REST API (Flask) to serve all, filtered, or summarized transactions.
+  - Connect it to the dashboard with async requests.
