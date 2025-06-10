@@ -9,6 +9,8 @@ from datetime import datetime, date
 import urllib.parse
 from dotenv import load_dotenv
 
+load_dotenv()
+
 app = Flask(__name__)
 CORS(app)
 
@@ -31,12 +33,13 @@ def get_db_connection():
         The password is URL-encoded to handle special characters.
     """
 
+
     db = os.getenv("DB_NAME")
     host = os.getenv("DB_HOST", "localhost")
     password = urllib.parse.quote(os.getenv("DB_PASSWORD"))
     db_user = os.getenv("DB_USER")
 
-    conn_url = f"mysql+mysqldb://{db_user}:{password}@{host}/{db}"
+    conn_url = f"mysql+pymysql://{db_user}:{password}@{host}/{db}"
 
     engine = create_engine(conn_url, pool_pre_ping=True)
     Session = sessionmaker(bind=engine)
