@@ -121,3 +121,17 @@ class TransactionProcessor:
             'withdrawal_from_agents.json',
             'withdrawal from agents'
         )
+
+    def process_all_transactions(self):
+        """ calls the methods to process all transaction types"""
+
+        self.process_airtime_payment()
+        self.process_bank_deposits()
+        self.process_bank_transfers()
+        self.process_bundle_purchases()
+        self.process_incoming_money()
+        self.process_momo_code_payments()
+        self.power_bill_payment()
+        self.third_party_transactions()
+        self.mobile_number_transactions()
+        self.withdrawal_from_agents()
