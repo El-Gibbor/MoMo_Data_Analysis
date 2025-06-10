@@ -10,8 +10,8 @@ class TransactionProcessor:
         """Initialize the processor with a cleaner obj."""
 
         self.cleaner = TransactionCleaner()
-        self.base_input_path = 'Backend/data/data_extraction/sms_category/'
-        self.base_output_path = 'Backend/data/data_cleaning/cleaned_data/'
+        self.base_input_path = 'backend/data/data_extraction/sms_category/'
+        self.base_output_path = 'backend/data/data_cleaning/cleaned_data/'
 
     def _process_transaction(self, config_name, input_filename, output_filename, t_type):
         """ helper method to process a transaction type."""
