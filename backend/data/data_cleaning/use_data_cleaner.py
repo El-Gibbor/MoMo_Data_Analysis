@@ -52,3 +52,13 @@ class TransactionProcessor:
             'bank_transfers.json',
             'Bank transfer'
         )
+
+    def process_bundle_purchases(self):
+        """ parse needed args for processing bundle purchases"""
+
+        self._process_transaction(
+            'bundle_purchase',
+            'bundle_purchases.xml',
+            'bundle_purchases.json',
+            'Bundle purchase'
+        )
