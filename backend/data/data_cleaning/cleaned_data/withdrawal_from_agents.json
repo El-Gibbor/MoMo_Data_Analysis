@@ -1,0 +1,38 @@
+[
+    {
+        "transaction_id": "TxId: 14098463509",
+        "amount": 20000,
+        "t_status": "Completed",
+        "transaction_type": "withdrawal from agents",
+        "description": "Withdrawal done through momo agent",
+        "date_and_time": "2024-05-26 02:10:34",
+        "transaction_fee": 350,
+        "new_balance": 6400,
+        "agent": "Agent Sophia (250790777777)",
+        "withdrawer": "Abebe Chala CHEBUDIE *********036"
+    },
+    {
+        "transaction_id": "TxId: 17006777609",
+        "amount": 50000,
+        "t_status": "Completed",
+        "transaction_type": "withdrawal from agents",
+        "description": "Withdrawal done through momo agent",
+        "date_and_time": "2024-11-23 13:23:52",
+        "transaction_fee": 1100,
+        "new_balance": 2401,
+        "agent": "Agent Sophia (250788999999)",
+        "withdrawer": "Abebe Chala CHEBUDIE *********036"
+    },
+    {
+        "transaction_id": "TxId: 17007580507",
+        "amount": 24000,
+        "t_status": "Completed",
+        "transaction_type": "withdrawal from agents",
+        "description": "Withdrawal done through momo agent",
+        "date_and_time": "2024-11-23 14:09:44",
+        "transaction_fee": 600,
+        "new_balance": 61892,
+        "agent": "Agent John (250788999999)",
+        "withdrawer": "Abebe Chala CHEBUDIE *********036"
+    }
+]

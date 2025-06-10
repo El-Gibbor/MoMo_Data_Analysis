@@ -1,0 +1,122 @@
+[
+    {
+        "transaction_id": "TxId: 14977177408",
+        "amount": 673000,
+        "t_status": "Successful",
+        "transaction_type": "Bank transfer",
+        "description": "Mobile money transfer to bank account",
+        "date_and_time": "2024-07-26 15:16:12",
+        "transaction_fee": 8000,
+        "receiver": "N/A",
+        "new_balance": 4950,
+        "institution_vendor": "ONAFRIQ MAURITIUS"
+    },
+    {
+        "transaction_id": "TxId: 14977293553",
+        "amount": 45000,
+        "t_status": "Successful",
+        "transaction_type": "Bank transfer",
+        "description": "Mobile money transfer to bank account",
+        "date_and_time": "2024-07-26 15:24:12",
+        "transaction_fee": 1200,
+        "receiver": "N/A",
+        "new_balance": 8750,
+        "institution_vendor": "ONAFRIQ MAURITIUS"
+    },
+    {
+        "transaction_id": "TxId: 14977386817",
+        "amount": 50000,
+        "t_status": "Successful",
+        "transaction_type": "Bank transfer",
+        "description": "Mobile money transfer to bank account",
+        "date_and_time": "2024-07-26 15:30:11",
+        "transaction_fee": 1200,
+        "receiver": "N/A",
+        "new_balance": 7550,
+        "institution_vendor": "ONAFRIQ MAURITIUS"
+    },
+    {
+        "transaction_id": "TxId: 15183763430",
+        "amount": 2000,
+        "t_status": "Successful",
+        "transaction_type": "Bank transfer",
+        "description": "Mobile money transfer to bank account",
+        "date_and_time": "2024-08-09 11:44:16",
+        "transaction_fee": 120,
+        "receiver": "N/A",
+        "new_balance": 1050,
+        "institution_vendor": "ONAFRIQ MAURITIUS"
+    },
+    {
+        "transaction_id": "TxId: 15204526240",
+        "amount": 90000,
+        "t_status": "Successful",
+        "transaction_type": "Bank transfer",
+        "description": "Mobile money transfer to bank account",
+        "date_and_time": "2024-08-10 18:10:19",
+        "transaction_fee": 2000,
+        "receiver": "N/A",
+        "new_balance": 9050,
+        "institution_vendor": "ONAFRIQ MAURITIUS"
+    },
+    {
+        "transaction_id": "TxId: 16400028923",
+        "amount": 50000,
+        "t_status": "Successful",
+        "transaction_type": "Bank transfer",
+        "description": "Mobile money transfer to bank account",
+        "date_and_time": "2024-10-23 09:59:07",
+        "receiver": "Linda Green",
+        "institution_vendor": "imbank.bank"
+    },
+    {
+        "transaction_id": "TxId: 16406794518",
+        "amount": 50000,
+        "t_status": "Successful",
+        "transaction_type": "Bank transfer",
+        "description": "Mobile money transfer to bank account",
+        "date_and_time": "2024-10-23 16:43:11",
+        "receiver": "Robert Brown",
+        "institution_vendor": "imbank.bank"
+    },
+    {
+        "transaction_id": "TxId: 16433471329",
+        "amount": 20000,
+        "t_status": "Successful",
+        "transaction_type": "Bank transfer",
+        "description": "Mobile money transfer to bank account",
+        "date_and_time": "2024-10-25 00:33:09",
+        "receiver": "Jane Smith",
+        "institution_vendor": "imbank.bank"
+    },
+    {
+        "transaction_id": "TxId: 16434717507",
+        "amount": 20000,
+        "t_status": "Successful",
+        "transaction_type": "Bank transfer",
+        "description": "Mobile money transfer to bank account",
+        "date_and_time": "2024-10-25 05:48:07",
+        "receiver": "Samuel Carter",
+        "institution_vendor": "imbank.bank"
+    },
+    {
+        "transaction_id": "TxId: 16471170286",
+        "amount": 50000,
+        "t_status": "Successful",
+        "transaction_type": "Bank transfer",
+        "description": "Mobile money transfer to bank account",
+        "date_and_time": "2024-10-26 21:52:12",
+        "receiver": "Robert Brown",
+        "institution_vendor": "imbank.bank"
+    },
+    {
+        "transaction_id": "TxId: 16664315282",
+        "amount": 10000,
+        "t_status": "Successful",
+        "transaction_type": "Bank transfer",
+        "description": "Mobile money transfer to bank account",
+        "date_and_time": "2024-11-05 21:55:09",
+        "receiver": "Jane Smith",
+        "institution_vendor": "imbank.bank"
+    }
+]
