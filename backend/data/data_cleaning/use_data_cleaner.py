@@ -137,5 +137,5 @@ class TransactionProcessor:
         self.withdrawal_from_agents()
 
 if __name__ == "__main__":
-     processor = TransactionProcessor()
-     processor.process_all_transactions()
+    processor = TransactionProcessor()
+    processor.process_all_transactions()
