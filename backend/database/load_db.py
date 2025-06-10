@@ -37,3 +37,22 @@ def load_to_db(session, json_path):
         print(f"JSON file not found: {json_path}")
     except json.JSONDecodeError as e:
         print(f"JSON decode error: {e}")
+
+        # ========= [ connect to db and populate it with transactions ] ============
+if __name__ == "__main__":
+    db = os.getenv("DB_NAME")
+    host = os.getenv("DB_HOST", "localhost")
+    password = urllib.parse.quote(os.getenv("DB_PASSWORD"))
+    db_user = os.getenv("DB_USER")
+
+    if not db_user or not password:
+        print("DB_USER or DB_PASSWORD not set in .env")
+        exit(1)
+
+    conn_url = f"mysql+mysqldb://{db_user}:{password}@{host}/{db}"
+
+    try:
+        engine = create_engine(conn_url, pool_pre_ping=True)
+        Base.metadata.drop_all(engine)
+        Base.metadata.create_all(engine)
+
