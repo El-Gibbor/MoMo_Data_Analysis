@@ -101,3 +101,14 @@ class TransactionProcessor:
             'third_party_transactions.json',
             'Third party transactions'
         )
+
+    def mobile_number_transactions(self):
+        """ args for processing third party transactions """
+
+        self._process_transaction(
+            'transfer_to_mobile_num',
+            'transfers_to_mobileNum.xml',
+            'transfer_to_mobile_num.json',
+            'mobile number transactions'
+        )
+
