@@ -43,3 +43,33 @@ class SMSCategorizer:
             condition_func (function): returns True if an sms body matches
         """
         self.categories[name] = condition_func
+
+    def _process_category(self, category_name, condition_func):
+        """ extracts smses that matches the condition to a new xml file """
+
+        # new file name and root element for each category
+        new_file_name = f'{category_name}.xml'
+        out_file = os.path.join(self.output_dir, new_file_name)
+        new_root_tag = f'{category_name}_smses'
+        root_element = ET.Element(new_root_tag)  # create new root elem
+
+        # loop through all sms elems and find matching smses
+        for sms in self.root.findall('sms'):
+            body = sms.attrib.get('body').lower()
+
+            if condition_func(body):
+                sms_elem = ET.SubElement(root_element, 'sms')  # new sub elem
+
+                # copy attributes of all matched sms to the new sms elem
+                for sms_key, sms_val in sms.attrib.items():
+                    sms_elem.set(sms_key, sms_val)
+
+        xml_str = ET.tostring(root_element, encoding='utf-8')
+
+        # convert to xml string and make it pretty indented/formatted
+        xml_dom = minidom.parseString(xml_str)
+        pretty_xml = xml_dom.toprettyxml(indent='   ')
+
+        with open(out_file, 'w', encoding='utf-8') as f:
+            f.write(pretty_xml)
+
