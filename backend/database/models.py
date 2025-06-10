@@ -23,7 +23,7 @@ class Transaction(Base):
         external_transaction_id (str): External vendor or partner ID.
         amount (Decimal): Transaction amount.
         t_status (str): Transaction status (e.g 'success', 'failed').
-         transaction_type (str): Type of transaction (e.g deposit, withdrawal).
+        transaction_type (str): Type of transaction (e.g deposit, withdrawal).
         description (str): A human readable description for the transaction.
         date_and_time (datetime): Timestamp of the transaction.
         transaction_fee (Decimal): Any fee charged for the transaction.
@@ -37,14 +37,25 @@ class Transaction(Base):
         withdrawer (str): Person performing the withdrawal (if applicable).
         power_token (str): Token used for prepaid power transactions.
     """
-
-        
-
-        __tablename__ = 'transactions'
+    __tablename__ = 'transactions'
 
     id = Column(Integer, primary_key=True)
     transaction_id = Column(String(100), unique=True)
     external_transaction_id = Column(String(100))
     amount = Column(DECIMAL(12, 2), nullable=False)
     t_status = Column(String(20), nullable=False)
-    
+    transaction_type = Column(String(100), nullable=False)
+    description = Column(Text)
+    date_and_time = Column(DateTime, nullable=False)
+    transaction_fee = Column(DECIMAL(12, 2), default=0)
+    new_balance = Column(DECIMAL(12, 2))
+    sender = Column(String(150))
+    receiver = Column(String(150))
+    sender_momo_id = Column(String(100))
+    institution_vendor = Column(String(150))
+    transaction_method = Column(String(100))
+    agent = Column(String(150))
+    withdrawer = Column(String(150))
+    power_token = Column(String(50))
+    created_at = Column(DateTime, server_default=func.now())
+
