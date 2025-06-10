@@ -91,3 +91,13 @@ class TransactionProcessor:
             'power_bill_payments.json',
             'Payment to MoMo code'
         )
+
+    def third_party_transactions(self):
+        """ args for processing third party transactions """
+
+        self._process_transaction(
+            'third_party_transaction',
+            'thirdParty_transactions.xml',
+            'third_party_transactions.json',
+            'Third party transactions'
+        )
