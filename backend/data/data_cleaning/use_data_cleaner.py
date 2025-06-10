@@ -62,3 +62,12 @@ class TransactionProcessor:
             'bundle_purchases.json',
             'Bundle purchase'
         )
+
+    def process_incoming_money(self):
+        """ args for processing incoming money transactions."""
+        self._process_transaction(
+            'incoming_money',
+            'incoming_money.xml',
+            'incoming_money.json',
+            'Received funds'
+        )
