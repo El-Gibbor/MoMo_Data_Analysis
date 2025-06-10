@@ -90,5 +90,41 @@ class SMSCategorizer:
         for name, condition in self.categories.items():
             self._process_category(name, condition)
 
-        #  call for non matche after categorizing matches first.
+        #  call for non matches after categorizing matches first.
         self._process_non_matches()
+
+     # methods & category conditions to get related sms data into category
+
+    def incoming_money(body):
+        return 'you have received' in body
+
+    def airtime_payment(body):
+        return 'to airtime' in body
+
+    def cash_power_bill_payment(body):
+        return 'mtn cash power' in body
+
+    def momo_code_payment(body):
+        return 'txid:' in body and '*162*' not in body and 'fee was 0 rwf' in body
+
+    def transfers_to_mobile_num(body):
+        return '*165*s*' in body and 'fee was:' in body
+
+    def bank_deposits(body):
+        return 'a bank deposit of' in body
+
+    def third_party_transactions(body):
+        return 'external transaction' in body and 'data bundle' not in body
+
+    def withdrawal_from_agent(body):
+        return 'via agent: agent' in body
+
+    def purchase_for_bundles(body):
+        return ('bundle' in body or 'data bundle' in body) and 'failed' not in body and 'failed at' not in body
+
+    def bank_transfers(body):
+        return (
+                'transferred' in body and 'imbank.bank' in body
+        ) or 'to onafriq mauritius' in body
+
+
