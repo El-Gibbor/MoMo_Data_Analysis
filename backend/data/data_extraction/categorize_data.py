@@ -137,8 +137,8 @@ def bank_transfers(body):
 
 if __name__ == "__main__":
 
-    input_file = 'Backend/data/raw_data/modified_sms_v2.xml'
-    output_dir = 'Backend/data/data_extraction/sms_category'
+    input_file = 'backend/data/raw_data/modified_sms_v2.xml'
+    output_dir = 'backend/data/data_extraction/sms_category'
 
     # Create a categorizer obj
     categorizer = SMSCategorizer(input_file, output_dir)
