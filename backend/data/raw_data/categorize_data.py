@@ -127,4 +127,37 @@ class SMSCategorizer:
                 'transferred' in body and 'imbank.bank' in body
         ) or 'to onafriq mauritius' in body
 
+    if __name__ == "__main__":
+        input_file = 'Backend/data/raw_data/modified_sms_v2.xml'
+        output_dir = 'Backend/data/data_extraction/sms_category'
 
+        # Create a categorizer obj
+        categorizer = SMSCategorizer(input_file, output_dir)
+
+        # Load XML file
+        categorizer.load_xml_data()
+
+        # Add sms categories
+        categorizer.add_sms_category('incoming_money', incoming_money)
+        categorizer.add_sms_category('airtime_payments', airtime_payment)
+        categorizer.add_sms_category(
+            'power_bill_payment', cash_power_bill_payment
+        )
+        categorizer.add_sms_category(
+            'momo_code_payment', momo_code_payment
+        )
+        categorizer.add_sms_category(
+            'transfers_to_mobileNum', transfers_to_mobile_num
+        )
+        categorizer.add_sms_category('bank_deposits', bank_deposits)
+        categorizer.add_sms_category(
+            'thirdParty_transactions', third_party_transactions
+        )
+        categorizer.add_sms_category(
+            'withdrawal_from_agents', withdrawal_from_agent
+        )
+        categorizer.add_sms_category('bundle_purchases', purchase_for_bundles)
+        categorizer.add_sms_category('bank_transfers', bank_transfers)
+
+        # Process all
+        categorizer.process_all_sms()
