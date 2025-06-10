@@ -44,6 +44,7 @@ if __name__ == "__main__":
     host = os.getenv("DB_HOST", "localhost")
     password = urllib.parse.quote(os.getenv("DB_PASSWORD"))
     db_user = os.getenv("DB_USER")
+    # print(password)?
 
     if not db_user or not password:
         print("DB_USER or DB_PASSWORD not set in .env")
@@ -58,13 +59,13 @@ if __name__ == "__main__":
 
     # loops through all cleaned data (json) and load them to db
         with Session(engine) as session:
-            json_files = glob("Backend/data/data_cleaning/cleaned_data/*.json")
+            json_files = glob("backend/data/data_cleaning/cleaned_data/*.json")
             for json_file in json_files:
                 load_to_db(session, json_file)
 
-        print("\n=================================================")
-        print("Database populated successfully.")
-        print("=================================================")
+        print("\n==============================================")
+        print("The Database is successfully populated!")
+        print("==============================================")
 
     except OperationalError as conn_err:
         print(f"\nDB CONNECTION FAILED:\n{conn_err}")
