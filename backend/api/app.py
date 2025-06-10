@@ -41,10 +41,11 @@ def get_db_connection():
     engine = create_engine(conn_url, pool_pre_ping=True)
     Session = sessionmaker(bind=engine)
     return Session()
-    @app.route('/api/transactions', methods=['GET'])
-    def get_transactions():
-        """Get filtered transactions with pagination"""
-        session = get_db_connection()
+
+@app.route('/api/transactions', methods=['GET'])
+def get_transactions():
+    """Get filtered transactions with pagination"""
+    session = get_db_connection()
 
     try:
         # Get query parameters for filtering
@@ -124,7 +125,7 @@ def get_db_connection():
                 'pages': (total + per_page - 1) // per_page
             }
         })
-        
+
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     finally:
