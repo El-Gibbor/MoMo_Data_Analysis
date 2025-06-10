@@ -38,7 +38,7 @@ def load_to_db(session, json_path):
     except json.JSONDecodeError as e:
         print(f"JSON decode error: {e}")
 
-        # ========= [ connect to db and populate it with transactions ] ============
+# ========= [ connect to db and populate it with transactions ] ============
 if __name__ == "__main__":
     db = os.getenv("DB_NAME")
     host = os.getenv("DB_HOST", "localhost")
@@ -56,7 +56,7 @@ if __name__ == "__main__":
         Base.metadata.drop_all(engine)
         Base.metadata.create_all(engine)
 
-# loops through all cleaned data (json) and load them to db
+    # loops through all cleaned data (json) and load them to db
         with Session(engine) as session:
             json_files = glob("Backend/data/data_cleaning/cleaned_data/*.json")
             for json_file in json_files:
