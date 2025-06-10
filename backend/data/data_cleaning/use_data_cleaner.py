@@ -12,3 +12,13 @@ class TransactionProcessor:
         self.cleaner = TransactionCleaner()
         self.base_input_path = 'Backend/data/data_extraction/sms_category/'
         self.base_output_path = 'Backend/data/data_cleaning/cleaned_data/'
+
+    def _process_transaction(self, config_name, input_filename, output_filename, t_type):
+        """ helper method to process a transaction type."""
+
+        config = TransactionConfigs.get_config(config_name)
+        input_file = f'{self.base_input_path}{input_filename}'
+        output_file = f'{self.base_output_path}{output_filename}'
+
+        self.cleaner.clean_transaction_smses(
+            input_file, output_file, t_type, config)
