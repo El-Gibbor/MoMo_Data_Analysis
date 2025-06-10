@@ -24,7 +24,7 @@ class SMSCategorizer:
         # Create output directory if it doesn't exist
         os.makedirs(output_dir, exist_ok=True)
 
-        def load_xml_data(self):
+    def load_xml_data(self):
             """ loads the input xml file and get its root element """
 
             try:
@@ -33,3 +33,13 @@ class SMSCategorizer:
             except FileNotFoundError as file_error:
                 print(f'Unable to parse xml file: \n {file_error}')
                 exit(1)
+
+    def add_sms_category(self, name, condition_func):
+        """
+        Adds a category for SMS categorization.
+
+        Args:
+            name (str): name of the category (used for file naming)
+            condition_func (function): returns True if an sms body matches
+        """
+        self.categories[name] = condition_func
