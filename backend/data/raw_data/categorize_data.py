@@ -73,3 +73,13 @@ class SMSCategorizer:
         with open(out_file, 'w', encoding='utf-8') as f:
             f.write(pretty_xml)
 
+    def _process_non_matches(self):
+        """ extracts the rest messages that doesnt match any category """
+
+        def has_no_category(body):
+            for condition in self.categories.values():
+                if condition(body):
+                    return False
+            return True
+
+        self._process_category('non_transaction_sms', has_no_category)
