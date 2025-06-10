@@ -32,3 +32,13 @@ class TransactionProcessor:
             'airtime_payment.json',
             'Airtime'
         )
+
+    def process_bank_deposits(self):
+        """ parse args needed for processing bank deposit transactions """
+
+        self._process_transaction(
+            'bank_deposit',
+            'bank_deposits.xml',
+            'bank_deposits.json',
+            'Bank deposit',
+        )
