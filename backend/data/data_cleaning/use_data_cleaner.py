@@ -71,3 +71,13 @@ class TransactionProcessor:
             'incoming_money.json',
             'Received funds'
         )
+
+    def process_momo_code_payments(self):
+        """ args for processing MoMo code payment transactions."""
+
+        self._process_transaction(
+            'momo_code_payment',
+            'momo_code_payment.xml',
+            'momo_code_payments.json',
+            'MoMo code payments'
+        )
