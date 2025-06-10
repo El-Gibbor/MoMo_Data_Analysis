@@ -42,3 +42,13 @@ class TransactionProcessor:
             'bank_deposits.json',
             'Bank deposit',
         )
+
+    def process_bank_transfers(self):
+        """ parse arguments for bank transfer processing """
+
+        self._process_transaction(
+            'bank_transfer',
+            'bank_transfers.xml',
+            'bank_transfers.json',
+            'Bank transfer'
+        )
