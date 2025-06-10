@@ -135,3 +135,7 @@ class TransactionProcessor:
         self.third_party_transactions()
         self.mobile_number_transactions()
         self.withdrawal_from_agents()
+
+if __name__ == "__main__":
+     processor = TransactionProcessor()
+     processor.process_all_transactions()
