@@ -22,3 +22,13 @@ class TransactionProcessor:
 
         self.cleaner.clean_transaction_smses(
             input_file, output_file, t_type, config)
+
+    def process_airtime_payment(self):
+        """ parse the needed args for processing airtime trasaction"""
+
+        self._process_transaction(
+            'airtime',
+            'airtime_payments.xml',
+            'airtime_payment.json',
+            'Airtime'
+        )
