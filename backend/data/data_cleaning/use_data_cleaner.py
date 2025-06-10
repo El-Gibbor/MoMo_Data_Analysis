@@ -112,3 +112,12 @@ class TransactionProcessor:
             'mobile number transactions'
         )
 
+    def withdrawal_from_agents(self):
+        """ args for processing withdrawal from agents"""
+
+        self._process_transaction(
+            'withdrawal_from_agents',
+            'withdrawal_from_agents.xml',
+            'withdrawal_from_agents.json',
+            'withdrawal from agents'
+        )
