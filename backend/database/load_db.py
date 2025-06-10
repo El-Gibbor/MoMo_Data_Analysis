@@ -56,3 +56,15 @@ if __name__ == "__main__":
         Base.metadata.drop_all(engine)
         Base.metadata.create_all(engine)
 
+# loops through all cleaned data (json) and load them to db
+        with Session(engine) as session:
+            json_files = glob("Backend/data/data_cleaning/cleaned_data/*.json")
+            for json_file in json_files:
+                load_to_db(session, json_file)
+
+        print("\n=================================================")
+        print("Database populated successfully.")
+        print("=================================================")
+
+    except OperationalError as conn_err:
+        print(f"\nDB CONNECTION FAILED:\n{conn_err}")
