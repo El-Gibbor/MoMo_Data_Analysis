@@ -83,3 +83,12 @@ class SMSCategorizer:
             return True
 
         self._process_category('non_transaction_sms', has_no_category)
+
+    def process_all_sms(self):
+        """ processes all categories. both matching and non matching"""
+
+        for name, condition in self.categories.items():
+            self._process_category(name, condition)
+
+        #  call for non matche after categorizing matches first.
+        self._process_non_matches()
