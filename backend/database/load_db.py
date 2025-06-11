@@ -44,7 +44,6 @@ if __name__ == "__main__":
     host = os.getenv("DB_HOST", "localhost")
     password = urllib.parse.quote(os.getenv("DB_PASSWORD"))
     db_user = os.getenv("DB_USER")
-    # print(password)?
 
     if not db_user or not password:
         print("DB_USER or DB_PASSWORD not set in .env")

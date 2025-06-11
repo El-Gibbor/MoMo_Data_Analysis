@@ -4,12 +4,10 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from sqlalchemy import create_engine, func, extract, and_, or_
 from sqlalchemy.orm import sessionmaker
-from models import Transaction
+from models import Base, Transaction
 from datetime import datetime, date
 import urllib.parse
 from dotenv import load_dotenv
-
-load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
@@ -18,31 +16,27 @@ CORS(app)
 # ================== [ Db setup/connection ] ==================
 def get_db_connection():
     """
-    Establishes and returns a MySQL database connection session.
+    Establishes and returns a PostgreSQL database connection session.
 
     Returns:
         Session: A SQLAlchemy session object connected to the database.
 
-    Environment Variables Required:
+    Environment Variables:
+        DATABASE_URL: Complete PostgreSQL connection URL (preferred)
+        OR individual variables:
         DB_NAME: Name of the database
-        DB_HOST: Database host address (defaults to "localhost")
+        DB_HOST: Database host address
         DB_PASSWORD: Database password
         DB_USER: Database username
-
-    Note:
-        The password is URL-encoded to handle special characters.
+        DB_PORT: Database port (defaults to 5432)
     """
 
+    database_url = os.getenv("DATABASE_URL")
 
-    db = os.getenv("DB_NAME")
-    host = os.getenv("DB_HOST", "localhost")
-    password = urllib.parse.quote(os.getenv("DB_PASSWORD"))
-    db_user = os.getenv("DB_USER")
+    engine = create_engine(database_url, pool_pre_ping=True)
 
-    conn_url = f"mysql+pymysql://{db_user}:{password}@{host}/{db}"
-
-    engine = create_engine(conn_url, pool_pre_ping=True)
     Session = sessionmaker(bind=engine)
+    Base.metadata.create_all(engine)
     return Session()
 
 @app.route('/api/transactions', methods=['GET'])
@@ -63,7 +57,7 @@ def get_transactions():
         search = request.args.get('search')
         query = session.query(Transaction)  # build the query
 
-        # apply filter using the givien params
+        # apply filter using the given params
         if transaction_type:
             query = query.filter(Transaction.transaction_type == transaction_type)
         if status:
@@ -136,5 +130,4 @@ def get_transactions():
 
 
 if __name__ == '__main__':
-    # app.run(debug=True, host='0.0.0.0', port=5000)
     app.run(debug=True, host='0.0.0.0')
