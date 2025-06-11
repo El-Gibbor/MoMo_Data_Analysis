@@ -9,6 +9,8 @@ from datetime import datetime, date
 import urllib.parse
 from dotenv import load_dotenv
 
+load_dotenv()
+
 app = Flask(__name__)
 CORS(app)
 
