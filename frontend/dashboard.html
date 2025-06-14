@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>MTN MoMo | Data Analysis</title>
+  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel="stylesheet" href="./style/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+
+<body>
+  <nav class="sidebar">
+    <header>
+      <div class="image-text">
+        <span class="image">
+          <img src="./assets/logo.png" alt="momo-logo">
+        </span>
+
+        <div class="text header-text">
+          <span class="name"><span class="white-name">DATA</span> ANALYSIS</span>
+        </div>
+      </div>
+
+      <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+    <div class="menu-bar">
+      <div class="menu">
+        <ul class="menu-links">
+          <li class="nav-link">
+            <a href="#">
+              <i class='bx bx-grid-alt icon'></i>
+              <span class="text nav-text">Dashboard</span>
+            </a>
+            <span class="tooltip">Dashboard</span>
+          </li>
+          <li class="nav-link">
+            <a href="#">
+              <i class='bx bx-money-withdraw icon'></i>
+              <span class="text nav-text">Transactions</span>
+            </a>
+            <span class="tooltip">Transactions</span>
+          </li>
+          <li class="nav-link">
+            <a href="#">
+              <i class='bx bx-analyse icon'></i>
+              <span class="text nav-text">Analytics</span>
+            </a>
+            <span class="tooltip">Analytics</span>
+          </li>
+          <li class="nav-link">
+            <a href="#">
+              <i class='bx bx-cog icon'></i>
+              <span class="text nav-text">Settings</span>
+            </a>
+            <span class="tooltip">Settings</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bottom-content">
+        <li class="">
+          <a href="#">
+            <span class="text nav-text">Built by SA Group 45</span>
+          </a>
+        </li>
+      </div>
+    </div>
+
+  </nav>
+
+
+  <section class="main-content">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+      <div class="dashboard-title">Transaction Analytics Dashboard</div>
+      <div class="date-filter">
+        <input type="date" id="start-date" value="2025-01-01">
+        <input type="date" id="end-date" value="2025-04-11">
+        <button>Apply Filter</button>
+      </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+      <div class="card">
+        <i class='bx bx-transfer card-icon'></i>
+        <div class="card-title">Total Transactions</div>
+        <div class="card-value"></div>
+      </div>
+      <div class="card">
+        <i class='bx bx-money card-icon'></i>
+        <div class="card-title">Total Volume</div>
+        <div class="card-value"></div>
+      </div>
+      <div class="card">
+        <i class='bx bx-trending-up card-icon'></i>
+        <div class="card-title">Average Amount</div>
+        <div class="card-value"></div>
+      </div>
+      <div class="card">
+        <i class='bx bx-bar-chart card-icon'></i>
+        <div class="card-title">Most Common Type</div>
+        <div class="card-value"></div>
+      </div>
+    </div>
+
+    <!-- Charts Area -->
+    <div class="dashboard-charts">
+      <!-- Transaction Volume Chart -->
+      <div class="chart-container">
+        <div class="chart-header">
+          <div class="chart-title">Transaction Volume by Month</div>
+          <div class="chart-actions">
+            <select id="volume-chart-type">
+              <option value="all">All Types</option>
+              <option value="deposits">Deposits</option>
+              <option value="withdrawals">Withdrawals</option>
+              <option value="payments">Payments</option>
+            </select>
+          </div>
+        </div>
+        <canvas id="volumeChart"></canvas>
+      </div>
+
+      <!-- Transaction Distribution Chart -->
+      <div class="chart-container">
+        <div class="chart-header">
+          <div class="chart-title">Transaction Distribution by Type</div>
+          <div class="chart-actions">
+            <select id="distribution-time-period">
+              <option value="all">All Time</option>
+              <option value="month">This Month</option>
+              <option value="week">This Week</option>
+            </select>
+          </div>
+        </div>
+        <canvas id="distributionChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Transactions Table -->
+    <div class="transactions-section">
+      <div class="transactions-header">
+        <h3>Recent Transactions</h3>
+        <div class="search-filter">
+          <input type="text" placeholder="Search transactions...">
+          <select id="type-filter">
+            <option value="all">All Types</option>
+            <option value="Bundle purchase">Bundle purchase</option>
+            <option value="Payment to MoMo code">Payment to MoMo code</option>
+            <option value="MoMo code payments">MoMo code payments</option>
+            <option value="Received funds">Incoming Money</option>
+            <option value="Bank deposit">Bank Deposits</option>
+            <option value="Bank transfer">Bank Transfers</option>
+            <option value="Airtime">Airtime Purchase</option>
+          </select>
+        </div>
+      </div>
+
+      <table class="transactions-table">
+       <thead>
+          <tr>
+            <th>Date</th>
+            <th>Transaction Type</th>
+            <th>Amount (RWF)</th>
+            <th>Description</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr onclick="openModal()">
+            <!-- Dynamic data: modal in transaction.js -->
+          </tr>
+          <tr onclick="openModal()">
+
+          </tr>
+          <tr onclick="openModal()">
+
+          </tr>
+          <tr onclick="openModal()">
+
+          </tr>
+          <tr onclick="openModal()">
+
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pagination">
+        <button>Prev</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>Next</button>
+      </div>
+    </div>
+  </section>
+
+
+  <div id="transactionModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div class="transaction-details">
+        <!-- Dynamic: transaction.js -->
+      </div>
+    </div>
+  </div>
+
+  <script src="./script/script.js"></script>
+  <script src="./script/transactions.js"></script>
+</body>
+
+</html>
