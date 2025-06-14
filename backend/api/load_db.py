@@ -21,13 +21,10 @@ def load_to_db(session, json_path):
         updated = 0
 
         for item in data_read:
-            tx_id = item.get("transaction_id")
-
-            if not tx_id: 
-                continue
+            tx_id = item.get("id")
 
             # Check if transaction already exists
-            existing = session.query(Transaction).filter_by(transaction_id=tx_id).first()
+            existing = session.query(Transaction).filter_by(id=tx_id).first()
 
             if existing:
                 # Update fields
