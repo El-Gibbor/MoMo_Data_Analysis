@@ -189,6 +189,52 @@ def get_transaction_volume_by_type():
         session.close()
 
 
+@app.route('/api/summary/monthly', methods=['GET'])
+def get_monthly_summary():
+    """
+    Get monthly transaction volume summaries.
+    Optional filters: year, month, transaction_type
+    """
+    session = get_db_connection()
+
+    try:
+        year = request.args.get('year', type=int)
+        month = request.args.get('month', type=int)
+        transaction_type = request.args.get('type')
+
+        query = session.query(
+            func.extract('year', Transaction.date_and_time).label('year'),
+            func.extract('month', Transaction.date_and_time).label('month'),
+            func.coalesce(func.sum(Transaction.amount), 0).label('total_volume')
+        )
+
+        # Apply filters if provided
+        if year:
+            query = query.filter(func.extract('year', Transaction.date_and_time) == year)
+        if month:
+            query = query.filter(func.extract('month', Transaction.date_and_time) == month)
+        if transaction_type:
+            query = query.filter(Transaction.transaction_type == transaction_type)
+
+        # Group and order the result
+        query = query.group_by('year', 'month').order_by('year', 'month')
+        results = query.all()
+
+        # Format results
+        summary = []
+        for row in results:
+            summary.append({
+                'year': int(row.year),
+                'month': int(row.month),
+                'total_volume': float(row.total_volume)
+            })
+
+        return jsonify(summary)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        session.close()
 
 
 if __name__ == '__main__':
