@@ -154,6 +154,42 @@ def get_summary():
         session.close()
 
 
+@app.route('/api/summary/vol-by-type', methods=['GET'])
+def get_transaction_volume_by_type():
+    session = get_db_connection()
+    try:
+        date_from = request.args.get('date_from')
+        date_to = request.args.get('date_to')
+
+        query = session.query(
+            Transaction.transaction_type,
+            func.sum(Transaction.amount).label('total_volume')
+        ).group_by(Transaction.transaction_type)
+
+        # filter by date
+        if date_from:
+            query = query.filter(Transaction.date_and_time >= datetime.strptime(date_from, '%Y-%m-%d'))
+        if date_to:
+            query = query.filter(Transaction.date_and_time <= datetime.strptime(date_to, '%Y-%m-%d'))
+
+        results = query.all()
+
+        summary = []
+        for row in results:
+            summary.append({
+                'transaction_type': row.transaction_type or 'Unknown',
+                'total_volume': float(row.total_volume) if row.total_volume else 0
+            })
+
+        return jsonify(summary)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        session.close()
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
