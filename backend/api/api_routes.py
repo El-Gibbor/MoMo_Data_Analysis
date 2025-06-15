@@ -15,7 +15,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-# ================== [ Db setup/connection ] ==================
+# ============== [ Db setup/connection ] ==============
 def get_db_connection():
     """
     Establishes and returns a PostgreSQL database connection session.
@@ -24,23 +24,17 @@ def get_db_connection():
         Session: A SQLAlchemy session object connected to the database.
 
     Environment Variables:
-        DATABASE_URL: Complete PostgreSQL connection URL (preferred)
-        OR individual variables:
-        DB_NAME: Name of the database
-        DB_HOST: Database host address
-        DB_PASSWORD: Database password
-        DB_USER: Database username
-        DB_PORT: Database port (defaults to 5432)
+        DATABASE_URL: Complete PostgreSQL connection URL
     """
 
     database_url = os.getenv("DATABASE_URL")
-
     engine = create_engine(database_url, pool_pre_ping=True)
-
     Session = sessionmaker(bind=engine)
+
     Base.metadata.create_all(engine)
     return Session()
 
+# ================ [ API Endpoints ] ===================
 @app.route('/api/transactions', methods=['GET'])
 def get_transactions():
     """Get filtered transactions with pagination"""
@@ -70,10 +64,10 @@ def get_transactions():
         if date_to:
             date_to_obj = datetime.strptime(date_to, '%Y-%m-%d')
             query = query.filter(Transaction.date_and_time <= date_to_obj)
-        if min_amount:
-            query = query.filter(Transaction.amount >= float(min_amount))
-        if max_amount:
-            query = query.filter(Transaction.amount <= float(max_amount))
+        # if min_amount:
+        #     query = query.filter(Transaction.amount >= float(min_amount))
+        # if max_amount:
+        #     query = query.filter(Transaction.amount <= float(max_amount))
         if search:
             query = query.filter(or_(
                 Transaction.description.contains(search),
@@ -129,6 +123,36 @@ def get_transactions():
         return jsonify({'error': str(e)}), 500
     finally:
         session.close()
+
+
+@app.route('/api/summary', methods=['GET'])
+def get_summary():
+    """Get overall summary statistics of all transactions - Not paginated """
+    session = get_db_connection()
+
+    try:
+        total_transactions = session.query(func.count(Transaction.id)).scalar()
+        total_volume = session.query(func.coalesce(func.sum(Transaction.amount), 0)).scalar()
+        average_amount = session.query(func.coalesce(func.avg(Transaction.amount), 0)).scalar()
+
+        # Get the most common transaction type
+        most_common_type = session.query(
+            Transaction.transaction_type,
+            func.count(Transaction.transaction_type).label('count')
+        ).group_by(Transaction.transaction_type).order_by(func.count(Transaction.transaction_type).desc()).first()
+
+        return jsonify({
+            'total_transactions': total_transactions,
+            'total_volume': float(total_volume),
+            'average_amount': float(average_amount),
+            'most_common_type': most_common_type[0] if most_common_type else None
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        session.close()
+
 
 
 if __name__ == '__main__':
