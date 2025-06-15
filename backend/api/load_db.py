@@ -18,26 +18,27 @@ def load_to_db(session, json_path):
             data_read = json.load(f)
 
         inserted = 0
-        updated = 0
+        # updated = 0
 
         for item in data_read:
-            tx_id = item.get("id")
+            # tx_id = item.get("id")
 
-            # Check if transaction already exists
-            existing = session.query(Transaction).filter_by(id=tx_id).first()
+            # # Check if transaction already exists
+            # existing = session.query(Transaction).filter_by(id=tx_id).first()
 
-            if existing:
-                # Update fields
-                for key, value in item.items():
-                    setattr(existing, key, value)
-                updated += 1
-            else:
-                session.add(Transaction(**item))
-                inserted += 1
+            # if existing:
+            #     # Update fields
+            #     for key, value in item.items():
+            #         setattr(existing, key, value)
+            #     updated += 1
+            # else:
+            session.add(Transaction(**item))
+            inserted += 1
 
         session.commit()
 
-        print(f"\n{json_path}: {inserted} inserted | {updated} updated")
+        # print(f"\n{json_path}: {inserted} inserted | {updated} updated")
+        print(f"\n{json_path}: {inserted} inserted")
 
     except FileNotFoundError:
         print(f"File not found: {json_path}")
@@ -46,7 +47,7 @@ def load_to_db(session, json_path):
     except Exception as e:
         print(f" Unexpected error: {e}")
 
-# ======== [ Entry Point: dbconnection and data populating ] ========
+# ======== [ Entry Point: db connection and data populating ] ========
 if __name__ == "__main__":
     database_url = os.getenv("DATABASE_URL")
 
