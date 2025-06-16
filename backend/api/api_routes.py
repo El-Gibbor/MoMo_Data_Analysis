@@ -200,7 +200,8 @@ def get_monthly_summary():
     try:
         year = request.args.get('year', type=int)
         month = request.args.get('month', type=int)
-        transaction_type = request.args.get('type')
+        transaction_type = request.args.get('transaction_type')
+
 
         query = session.query(
             func.extract('year', Transaction.date_and_time).label('year'),
