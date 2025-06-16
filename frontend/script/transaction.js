@@ -132,3 +132,20 @@ function updatePagination(pagination) {
         }
         paginationHTML += `<button onclick="changePage(${totalPages})">${totalPages}</button>`;
     }
+
+    // Next button
+    paginationHTML += `
+        <button onclick="changePage(${currentPage + 1})" ${currentPage >= totalPages ? 'disabled' : ''}>
+            Next
+        </button>
+    `;
+
+    paginationDiv.innerHTML = paginationHTML;
+}
+
+// Change page function
+function changePage(page) {
+    if (page < 1 || page > totalPages || page === currentPage) return;
+    currentPage = page;
+    loadTransactions();
+}
