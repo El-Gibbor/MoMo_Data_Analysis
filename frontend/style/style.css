@@ -21,3 +21,62 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+body {
+  background: var(--body-bg-color);
+  display: flex;
+  min-height: 100vh;
+  font-family: "Lexend", sans-serif;
+}
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 78px;
+  background: var(--main-color);
+  padding: 6px 14px;
+  transition: all 0.4s ease;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.sidebar.open {
+  width: 250px;
+}
+
+.sidebar header {
+  position: relative;
+  height: 60px;
+}
+
+.sidebar .image-text {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.sidebar .image {
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar .image img {
+  width: 45px;
+}
+
+.sidebar.close .image {
+  min-width: 60px;
+}
+
+.sidebar .text {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--white);
+  white-space: nowrap;
+  opacity: 1;
+  transition: all 0.4s ease;
+}
