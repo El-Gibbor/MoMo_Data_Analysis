@@ -245,3 +245,40 @@ function formatAmount(amount) {
     if (!amount) return '0';
     return parseInt(amount).toLocaleString();
 }
+
+// Colour: transaction status
+function getStatusBadge(status) {
+    if (!status) return '<span class="status Unknown">Unknown</span>';
+
+    const lowerStatus = status.toLowerCase();
+    let statusClass = '';
+
+    if (lowerStatus === 'completed' || lowerStatus === 'successful') {
+        statusClass = 'success';
+    } else if (lowerStatus === 'pending') {
+        statusClass = 'pending';
+    } else {
+        statusClass = 'Unknown';
+    }
+
+    return `<span class="status ${statusClass}">${status}</span>`;
+}
+
+function formatTransactionType(type) {
+    if (!type) return 'Unknown';
+
+    // Map API types to display names
+    const typeMap = {
+        'incoming': 'Incoming Money',
+        'payment': 'Payment to Merchant',
+        'transfer': 'Transfer',
+        'withdrawal': 'Withdrawal',
+        'deposit': 'Deposit',
+        'airtime': 'Airtime Purchase',
+        'cash_power': 'Cash Power Payment'
+    };
+
+    return typeMap[type.toLowerCase()] || type;
+}
+
+function mapUITypeToAPI(uiType) {
