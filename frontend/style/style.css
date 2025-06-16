@@ -435,3 +435,113 @@ canvas {
   border-color: var(--main-color);
 }
 
+/* ================= [ Detail Modal ] =================== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000; /* Higher than sidebar to appear on top */
+  left: 0;
+  top: -10%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation-name: fadeIn;
+  animation-duration: 0.3s;
+}
+
+.modal-content {
+  background-color: var(--card-bg);
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 70%;
+  max-width: 700px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation-name: slideIn;
+  animation-duration: 0.3s;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: black;
+}
+
+.transaction-details h2 {
+  color: var(--main-color);
+  margin-bottom: 20px;
+}
+
+.detail-row {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.detail-label {
+  width: 200px;
+  font-weight: 500;
+  color: #666;
+}
+
+.detail-value {
+  flex: 1;
+  color: var(--text-color);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-300px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ================== [Responsiveness ] ================== */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 0;
+    padding: 0;
+  }
+
+  .sidebar.open {
+    width: 250px;
+    padding: 6px 14px;
+  }
+
+  .main-content {
+    left: 0;
+    width: 100%;
+  }
+
+  .sidebar.open ~ .main-content {
+    left: 250px;
+    width: calc(100% - 250px);
+  }
+
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar .toggle {
+    right: -30px;
+  }
+}
+
