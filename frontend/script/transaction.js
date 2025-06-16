@@ -352,3 +352,63 @@ function openModal(transactionId, transactionData) {
         console.error('Error parsing transaction data:', e);
         return;
     }
+
+    // Modal content (transaction data)
+    const modalContent = modal.querySelector('.transaction-details');
+    if (modalContent) {
+        modalContent.innerHTML = `
+            <h2>Transaction Details</h2>
+            <div class="detail-row">
+                <div class="detail-label">Transaction ID:</div>
+                <div class="detail-value">${transaction.transaction_id || 'N/A'}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">External ID:</div>
+                <div class="detail-value">${transaction.external_transaction_id || 'N/A'}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Date & Time:</div>
+                <div class="detail-value">${formatDate(transaction.date_and_time)}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Transaction Type:</div>
+                <div class="detail-value">${formatTransactionType(transaction.transaction_type)}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Amount:</div>
+                <div class="detail-value">${formatAmount(transaction.amount)} RWF</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Transaction Fee:</div>
+                <div class="detail-value">${formatAmount(transaction.transaction_fee)} RWF</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">New Balance:</div>
+                <div class="detail-value">${formatAmount(transaction.new_balance)} RWF</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Sender:</div>
+                <div class="detail-value">${transaction.sender || 'N/A'}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Receiver:</div>
+                <div class="detail-value">${transaction.receiver || 'N/A'}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Status:</div>
+                <div class="detail-value">${transaction.status || 'N/A'}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Description:</div>
+                <div class="detail-value">${transaction.description || 'N/A'}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Institution/Vendor:</div>
+                <div class="detail-value">${transaction.institution_vendor || 'N/A'}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Transaction Method:</div>
+                <div class="detail-value">${transaction.transaction_method || 'N/A'}</div>
+            </div>
+        `;
+    }
