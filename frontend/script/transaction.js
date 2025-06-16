@@ -338,3 +338,17 @@ function showError(message) {
         `;
     }
 }
+
+// Modal functionality (detail pop up for each transaction)
+function openModal(transactionId, transactionData) {
+    const modal = document.getElementById('transactionModal');
+    if (!modal) return;
+
+    // Parse transaction data if it's a string
+    let transaction;
+    try {
+        transaction = typeof transactionData === 'string' ? JSON.parse(transactionData) : transactionData;
+    } catch (e) {
+        console.error('Error parsing transaction data:', e);
+        return;
+    }
