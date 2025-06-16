@@ -89,3 +89,46 @@ function displayTransactions(transactions) {
         `;
     }).join('');
 }
+
+// Update pagination buttons
+function updatePagination(pagination) {
+    currentPage = pagination.page;
+    totalPages = pagination.pages;
+
+    const paginationDiv = document.querySelector('.pagination');
+    if (!paginationDiv) return;
+
+    let paginationHTML = '';
+
+    // Previous button
+    paginationHTML += `
+        <button onclick="changePage(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''}>
+            Prev
+        </button>
+    `;
+
+    // Page numbers (show current page and 2 pages around it)
+    const startPage = Math.max(1, currentPage - 2);
+    const endPage = Math.min(totalPages, currentPage + 2);
+
+    if (startPage > 1) {
+        paginationHTML += `<button onclick="changePage(1)">1</button>`;
+        if (startPage > 2) {
+            paginationHTML += `<span>...</span>`;
+        }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+        paginationHTML += `
+            <button onclick="changePage(${i})" ${i === currentPage ? 'class="active"' : ''}>
+                ${i}
+            </button>
+        `;
+    }
+
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            paginationHTML += `<span>...</span>`;
+        }
+        paginationHTML += `<button onclick="changePage(${totalPages})">${totalPages}</button>`;
+    }
