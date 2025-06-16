@@ -238,5 +238,59 @@ def get_monthly_summary():
         session.close()
 
 
+@app.route('/api/summary/grouped', methods=['GET'])
+def get_grouped_summary():
+
+    # For mapping/categorizing transaction in deposit & payment
+    CATEGORY_MAP = {
+        # Deposits
+        "Received funds": "deposits",
+        "Bank deposit": "deposits",
+
+        # Payments
+        "MoMo code payments": "payments",
+        "mobile number transactions": "payments",
+        "Airtime": "payments",
+        "Power bill payments": "payments",
+        "withdrawal from agents": "payments",
+        "Third party transactions": "payments",
+        "Bundle purchase": "payments",
+        "Bank transfer": "payments"
+    }
+    session = get_db_connection()
+    try:
+        transactions = session.query(Transaction).all()
+
+        grouped_data = {
+            "deposits": {},
+            "payments": {}
+        }
+
+        for tx in transactions:
+            label = (tx.transaction_type or "").strip()
+            group = CATEGORY_MAP.get(label)
+
+            if not group:
+                continue  # Skip unknowns (or handle as 'uncategorized' if preferred)
+
+            # Initialize if not exists
+            if label not in grouped_data[group]:
+                grouped_data[group][label] = {
+                    "amount": 0,
+                    "count": 0
+                }
+
+            grouped_data[group][label]["amount"] += float(tx.amount or 0)
+            grouped_data[group][label]["count"] += 1
+
+        return jsonify(grouped_data)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        session.close()
+
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
