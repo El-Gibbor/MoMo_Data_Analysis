@@ -149,3 +149,30 @@ function changePage(page) {
     currentPage = page;
     loadTransactions();
 }
+
+// Update summary cards with data
+function updateSummaryCards(transactions) {
+    if (!transactions) return;
+
+    // Calculate totals (this is just for current page, you might want to get totals from a separate API endpoint)
+    const totalTransactions = transactions.length;
+    const totalVolume = transactions.reduce((sum, t) => sum + (t.amount || 0), 0);
+    const averageAmount = totalVolume / totalTransactions || 0;
+
+    // Count transaction types
+    const typeCounts = {};
+    transactions.forEach(t => {
+        const type = t.transaction_type || 'Unknown';
+        typeCounts[type] = (typeCounts[type] || 0) + 1;
+    });
+
+    const mostCommonType = Object.keys(typeCounts).reduce((a, b) =>
+        typeCounts[a] > typeCounts[b] ? a : b, 'N/A'
+    );
+
+    // Update card values
+    updateCardValue('.card:nth-child(1) .card-value', totalTransactions.toLocaleString());
+    updateCardValue('.card:nth-child(2) .card-value', `${totalVolume.toLocaleString()} RWF`);
+    updateCardValue('.card:nth-child(3) .card-value', `${Math.round(averageAmount).toLocaleString()} RWF`);
+    updateCardValue('.card:nth-child(4) .card-value', formatTransactionType(mostCommonType));
+}
