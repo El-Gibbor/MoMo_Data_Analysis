@@ -6,6 +6,7 @@
   <title>MTN MoMo | Data Analysis</title>
   <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <link rel="stylesheet" href="./style/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
 </head>
 
@@ -16,13 +17,8 @@
         <span class="image">
           <img src="./assets/logo.png" alt="momo-logo">
         </span>
-
-        <div class="text header-text">
-          <span class="name"><span class="white-name">DATA</span> ANALYSIS</span>
-        </div>
       </div>
 
-      <i class='bx bx-chevron-right toggle'></i>
     </header>
 
     <div class="menu-bar">
@@ -62,7 +58,6 @@
       <div class="bottom-content">
         <li class="">
           <a href="#">
-            <span class="text nav-text">Built by SA Group 45</span>
           </a>
         </li>
       </div>
@@ -75,92 +70,243 @@
     <!-- Dashboard Header -->
     <div class="dashboard-header">
       <div class="dashboard-title">Transaction Analytics Dashboard</div>
-      <div class="date-filter">
-        <input type="date" id="start-date" value="2025-01-01">
-        <input type="date" id="end-date" value="2025-04-11">
-        <button>Apply Filter</button>
-      </div>
+
     </div>
 
     <!-- Summary Cards -->
     <div class="summary-cards">
       <div class="card">
         <i class='bx bx-transfer card-icon'></i>
-        <div class="card-title">Total Transactions</div>
+        <div class="card-title">Overall Total Transactions</div>
         <div class="card-value"></div>
       </div>
       <div class="card">
         <i class='bx bx-money card-icon'></i>
-        <div class="card-title">Total Volume</div>
+        <div class="card-title">Overall Total Volume</div>
         <div class="card-value"></div>
       </div>
       <div class="card">
         <i class='bx bx-trending-up card-icon'></i>
-        <div class="card-title">Average Amount</div>
+        <div class="card-title">Overall Average Amount</div>
         <div class="card-value"></div>
       </div>
       <div class="card">
         <i class='bx bx-bar-chart card-icon'></i>
-        <div class="card-title">Most Common Type</div>
+        <div class="card-title">Overall Most Common Type</div>
         <div class="card-value"></div>
       </div>
     </div>
 
     <!-- Charts Area -->
+
     <div class="dashboard-charts">
-      <!-- Transaction Volume Chart -->
+
+      <!-- Transaction Volume by type -->
       <div class="chart-container">
         <div class="chart-header">
-          <div class="chart-title">Transaction Volume by Month</div>
-          <div class="chart-actions">
-            <select id="volume-chart-type">
-              <option value="all">All Types</option>
-              <option value="deposits">Deposits</option>
-              <option value="withdrawals">Withdrawals</option>
-              <option value="payments">Payments</option>
-            </select>
+          <div class="chart-title">Total Transaction Volume by Type</div>
+          <div class="chart-controls">
+            <input type="date" id="date-from" class="date-input" title="From Date">
+            <input type="date" id="date-to" class="date-input" title="To Date">
+            <button class="filter-btn" id="filter-btn" onclick="loadChartData()">
+              <span id="refresh-text">Apply Filter</span>
+            </button>
           </div>
         </div>
-        <canvas id="volumeChart"></canvas>
+
+        <div class="chart-type-tabs">
+          <button class="tab-btn active" onclick="switchChartType('line')">Line Chart</button>
+          <button class="tab-btn" onclick="switchChartType('bar')">Bar Chart</button>
+        </div>
+
+        <div class="chart-wrapper">
+          <div class="loading" id="loading">
+            <div>Loading transaction data...</div>
+          </div>
+          <!-- chart -->
+          <canvas id="transactionChart" class="chart-canvas" style="display: none;"></canvas>
+        </div>
+
+        <div class="chart-summary" id="chart-summary" style="display: none;">
+          <div class="summary-item">
+            <div class="summary-label">Total Volume</div>
+            <div class="summary-value" id="total-volume">-</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Transaction Types</div>
+            <div class="summary-value" id="total-types">-</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Highest Volume Type</div>
+            <div class="summary-value" id="highest-type">-</div>
+          </div>
+        </div>
+
+        <div id="data-status" class="status-indicator status-success" style="display: none;">
+        </div>
       </div>
 
-      <!-- Transaction Distribution Chart -->
+      <!-- Monthly summaries of transactions. -->
       <div class="chart-container">
-        <div class="chart-header">
-          <div class="chart-title">Transaction Distribution by Type</div>
-          <div class="chart-actions">
-            <select id="distribution-time-period">
-              <option value="all">All Time</option>
-              <option value="month">This Month</option>
-              <option value="week">This Week</option>
+        <div class="chart-header monthly-tx-chart-header">
+          <div class="chart-title">Monthly Transaction Volume</div>
+          <div class="chart-controls">
+
+            <select id="monthly-type" class="date-input" title="Select Type">
+              <option value="">All Types</option>
+              <option value="Bundle purchase">Bundle Purchases</option>
+              <option value="Power bill payments">Power bill Payments</option>
+              <option value="Received funds">Incoming Money</option>
+              <option value="Bank deposit">Bank Deposits</option>
+              <option value="Bank transfer">Bank Transfers</option>
+              <option value="Airtime">Airtime Purchases</option>
+              <option value="Third party transactions">Third Party Transactions </option>
+              <option value="MoMo code payments">MoMo Code Payments</option>
+              <option value="mobile number transactions">Mobile number Transactions</option>
+              <option value="withdrawal from agents">Withdrawal from Agents</option>
             </select>
+            <select id="monthly-year" class="date-input" title="Select Year">
+              <option value="">All Year</option>
+            </select>
+            <select id="monthly-month" class="date-input" title="Select Month">
+              <option value="">All Month</option>
+            </select>
+            <button class="filter-btn" id="monthly-filter-btn" onclick="monthlyRefreshChartData()">
+              <span id="monthly-refresh-text">Apply Filter</span>
+            </button>
           </div>
         </div>
-        <canvas id="distributionChart"></canvas>
+
+        <div class="chart-wrapper">
+          <div class="loading" id="monthly-loading">
+            <div>Loading monthly data...</div>
+          </div>
+          <!-- Monthly chart canvas -->
+          <canvas id="monthlyChartCanvas" class="chart-canvas" style="display: none;"></canvas>
+        </div>
+
+        <div class="chart-summary" id="monthly-chart-summary" style="display: none;">
+          <div class="summary-item">
+            <div class="summary-label">Total Volume</div>
+            <div class="summary-value" id="monthly-total-volume">-</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Total Months</div>
+            <div class="summary-value" id="monthly-total-months">-</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Highest Volume Month</div>
+            <div class="summary-value" id="monthly-highest-month">-</div>
+          </div>
+        </div>
+
+        <div id="monthly-status" class="status-indicator status-success" style="display: none;">
+          <!-- Dynamic monthly chart status -->
+        </div>
       </div>
     </div>
+
+    <!-- Distribution of Payments and Deposits -->
+    <div class=" chart-container distr-payment">
+      <div class="chart-header">
+        <div class="chart-title">Distribution of Payments and Deposits</div>
+        <div class="chart-controls">
+
+        </div>
+      </div>
+
+      <div class="distribution-charts-grid">
+        <div class="distribution-chart">
+          <h4>Deposit Distribution</h4>
+          <div class="pie-container">
+            <canvas id="depositPieChart"></canvas>
+          </div>
+          <div class="legend-container" id="depositLegend"></div>
+        </div>
+
+        <div class="distribution-chart">
+          <h4>Payment Distribution</h4>
+          <div class="pie-container">
+            <canvas id="paymentPieChart"></canvas>
+          </div>
+          <div class="legend-container" id="paymentLegend"></div>
+        </div>
+
+        <!-- Dual comparison chart (deposit and payment) -->
+        <div class="distribution-chart">
+          <h4>Comparison - Deposit vs Payments</h4>
+          <h6>Dual axis comparison of deposit vs payment by volume and transaction count</h6>
+          <div class="comparison-container">
+            <canvas id="comparisonChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-summary">
+        <div class="summary-item">
+          <div class="summary-label">Total Deposits</div>
+          <div class="summary-value" id="totalDepositVolume">$0</div>
+          <div class="summary-count" id="totalDepositCount" style="display: none;"></div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">Avg Deposit</div>
+          <div class="summary-value" id="avgDepositAmount">$0</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">Total Payments</div>
+          <div class="summary-value" id="totalPaymentVolume">$0</div>
+          <div class="summary-count" id="totalPaymentCount" style="display: none;"></div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">Avg Payment</div>
+          <div class="summary-value" id="avgPaymentAmount">$0</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">Net Flow</div>
+          <div class="summary-value" id="netVolume">$0</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">Deposit Ratio</div>
+          <div class="summary-value" id="depositRatio">0%</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">Payment Ratio</div>
+          <div class="summary-value" id="paymentRatio">0%</div>
+        </div>
+      </div>
+
+    </div>
+
 
     <!-- Transactions Table -->
     <div class="transactions-section">
       <div class="transactions-header">
-        <h3>Recent Transactions</h3>
+        <h3>Transactions Detail View</h3>
         <div class="search-filter">
           <input type="text" placeholder="Search transactions...">
           <select id="type-filter">
             <option value="all">All Types</option>
-            <option value="Bundle purchase">Bundle purchase</option>
-            <option value="Payment to MoMo code">Payment to MoMo code</option>
-            <option value="MoMo code payments">MoMo code payments</option>
+            <option value="Bundle purchase">Bundle purchases</option>
+            <option value="Power bill payments">Power bill payments</option>
             <option value="Received funds">Incoming Money</option>
             <option value="Bank deposit">Bank Deposits</option>
             <option value="Bank transfer">Bank Transfers</option>
-            <option value="Airtime">Airtime Purchase</option>
+            <option value="Airtime">Airtime Purchases</option>
+            <option value="Third party transactions">Third Party Transactions</option>
+            <option value="MoMo code payments">MoMo code payments</option>
+            <option value="mobile number transactions">Mobile number transactions</option>
+            <option value="withdrawal from agents">Withdrawal from Agents</option>
           </select>
+          <div class="date-filter">
+            <input type="date" id="start-date" value="">
+            <input type="date" id="end-date" value="">
+            <button>Apply Filter</button>
+          </div>
         </div>
       </div>
 
       <table class="transactions-table">
-       <thead>
+        <thead>
           <tr>
             <th>Date</th>
             <th>Transaction Type</th>
@@ -209,8 +355,11 @@
     </div>
   </div>
 
-  <script src="./script/script.js"></script>
+  <script src="./script/main.js.js"></script>
+  <script src="./script/monthlyTx.js"></script>
   <script src="./script/transactions.js"></script>
+  <script src="./script/volumeByType.js"></script>
+  <script src="./script/distribution.js"></script>
 </body>
 
 </html>
