@@ -13,3 +13,11 @@
   --body-bg-color: #e4e9f7;
   --white: #ffffff;
 }
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
