@@ -333,3 +333,55 @@ canvas {
   height: 250px;
 }
 
+/* ================= [ Transactions Table ] ================= */
+.transactions-section {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.transactions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.search-filter {
+  display: flex;
+  gap: 10px;
+}
+
+.search-filter input,
+.search-filter select {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  outline: none;
+}
+
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transactions-table th {
+  background-color: var(--light-color);
+  padding: 12px;
+  text-align: left;
+  font-weight: 500;
+  color: var(--main-color);
+}
+
+.transactions-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.8rem;
+}
+
+.transactions-table tbody tr:hover {
+  background-color: var(--hover-color);
+  cursor: pointer;
+}
+
