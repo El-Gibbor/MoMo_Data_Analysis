@@ -25,14 +25,12 @@ async function loadTransactions() {
             per_page: perPage
         });
 
-        // Add filters if they exist
+        // Add filters from what user selected
         if (currentFilters.search) params.append('search', currentFilters.search);
         if (currentFilters.type) params.append('type', currentFilters.type);
         if (currentFilters.status) params.append('status', currentFilters.status);
         if (currentFilters.date_from) params.append('date_from', currentFilters.date_from);
         if (currentFilters.date_to) params.append('date_to', currentFilters.date_to);
-        // if (currentFilters.min_amount) params.append('min_amount', currentFilters.min_amount);
-        // if (currentFilters.max_amount) params.append('max_amount', currentFilters.max_amount);
 
         const response = await fetch(`${API_BASE_URL}/api/transactions?${params}`);
 
@@ -150,32 +148,32 @@ function changePage(page) {
     loadTransactions();
 }
 
-// Update summary cards with data
-function updateSummaryCards(transactions) {
-    if (!transactions) return;
+// Fetch and update summary cards with all transaction data
+async function updateSummaryCards() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/summary`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch summary data');
+        }
 
-    // Calculate totals (this is just for current page, you might want to get totals from a separate API endpoint)
-    const totalTransactions = transactions.length;
-    const totalVolume = transactions.reduce((sum, t) => sum + (t.amount || 0), 0);
-    const averageAmount = totalVolume / totalTransactions || 0;
+        const data = await response.json();
 
-    // Count transaction types
-    const typeCounts = {};
-    transactions.forEach(t => {
-        const type = t.transaction_type || 'Unknown';
-        typeCounts[type] = (typeCounts[type] || 0) + 1;
-    });
+        const totalTransactions = data.total_transactions || 0;
+        const totalVolume = data.total_volume || 0;
+        const averageAmount = data.average_amount || 0;
+        const mostCommonType = data.most_common_type || 'N/A';
 
-    const mostCommonType = Object.keys(typeCounts).reduce((a, b) =>
-        typeCounts[a] > typeCounts[b] ? a : b, 'N/A'
-    );
+        // Update card values
+        updateCardValue('.card:nth-child(1) .card-value', totalTransactions.toLocaleString());
+        updateCardValue('.card:nth-child(2) .card-value', `${totalVolume.toLocaleString()} RWF`);
+        updateCardValue('.card:nth-child(3) .card-value', `${Math.round(averageAmount).toLocaleString()} RWF`);
+        updateCardValue('.card:nth-child(4) .card-value', formatTransactionType(mostCommonType));
 
-    // Update card values
-    updateCardValue('.card:nth-child(1) .card-value', totalTransactions.toLocaleString());
-    updateCardValue('.card:nth-child(2) .card-value', `${totalVolume.toLocaleString()} RWF`);
-    updateCardValue('.card:nth-child(3) .card-value', `${Math.round(averageAmount).toLocaleString()} RWF`);
-    updateCardValue('.card:nth-child(4) .card-value', formatTransactionType(mostCommonType));
+    } catch (error) {
+        console.error('Error loading summary data:', error);
+    }
 }
+
 
 // Helper function to update card values
 function updateCardValue(selector, value) {
