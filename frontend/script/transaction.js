@@ -282,3 +282,59 @@ function formatTransactionType(type) {
 }
 
 function mapUITypeToAPI(uiType) {
+    // Map UI filter values to API values
+    const typeMap = {
+        'incoming': 'incoming',
+        'payment': 'payment',
+        'transfer': 'transfer',
+        'withdrawal': 'withdrawal',
+        'deposit': 'deposit'
+    };
+
+    return typeMap[uiType] || uiType;
+}
+
+function getTransactionDescription(transaction) {
+    if (transaction.description) return transaction.description;
+
+    // Generate description based on transaction data
+    if (transaction.sender && transaction.receiver) {
+        return `From: ${transaction.sender} To: ${transaction.receiver}`;
+    } else if (transaction.sender) {
+        return `From: ${transaction.sender}`;
+    } else if (transaction.receiver) {
+        return `To: ${transaction.receiver}`;
+    }
+
+    return 'Transaction details';
+}
+
+function showLoading() {
+    const tbody = document.querySelector('.transactions-table tbody');
+    if (tbody) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 20px;">
+                    <i class='bx bx-loader-alt bx-spin'></i> Loading transactions...
+                </td>
+            </tr>
+        `;
+    }
+}
+
+function hideLoading() {
+    // Loading will be hidden when displayTransactions is called
+}
+
+function showError(message) {
+    const tbody = document.querySelector('.transactions-table tbody');
+    if (tbody) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 20px; color: #e74c3c;">
+                    <i class='bx bx-error'></i> ${message}
+                </td>
+            </tr>
+        `;
+    }
+}
