@@ -385,3 +385,31 @@ canvas {
   cursor: pointer;
 }
 
+/* ======= [ color: transaction status ] ======== */
+.status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status.success,
+.status.success {
+  background-color: rgba(46, 204, 113, 0.2);
+  color: #178746;
+}
+
+.status.pending {
+  background-color: rgba(241, 196, 15, 0.2);
+  color: #f1c40f;
+}
+
+.status.Unknown {
+  background-color: #6c757d; 
+}
+
+.status.pending {
+  background-color: #ffc107;
+  color: #212529;
+}
+
