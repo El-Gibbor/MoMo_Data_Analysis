@@ -120,3 +120,40 @@ header .toggle {
 .sidebar:not(.open) header .toggle {
   transform: translateY(-50%) rotate(180deg);
 }
+li .icon {
+  font-size: 1.3rem;
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  transition: all 0.3s ease;
+}
+
+li a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+li a:hover {
+  background-color: var(--main-dark-color);
+}
+
+a:hover .icon,
+a:hover .text {
+  color: var(--sec-color);
+}
+
+.sidebar li {
+  position: relative;
+  height: 50px;
+  margin-top: 10px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
