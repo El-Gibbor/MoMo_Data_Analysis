@@ -176,3 +176,27 @@ function updateSummaryCards(transactions) {
     updateCardValue('.card:nth-child(3) .card-value', `${Math.round(averageAmount).toLocaleString()} RWF`);
     updateCardValue('.card:nth-child(4) .card-value', formatTransactionType(mostCommonType));
 }
+
+// Helper function to update card values
+function updateCardValue(selector, value) {
+    const element = document.querySelector(selector);
+    if (element) {
+        element.textContent = value;
+    }
+}
+
+function setupEventListeners() {
+    // Search functionality
+    const searchInput = document.querySelector('.search-filter input[type="text"]');
+    if (searchInput) {
+        let searchTimeout;
+        searchInput.addEventListener('input', function (e) {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                currentFilters.search = e.target.value.trim() || null;
+                currentPage = 1;
+                loadTransactions();
+            }, 500);
+        });
+    }
+
