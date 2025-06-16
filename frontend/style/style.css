@@ -189,3 +189,62 @@ a:hover .text {
   flex-direction: column;
   justify-content: space-between;
 }
+
+/* =============== [ Main Content ] ================ */
+.main-content {
+  position: relative;
+  background: var(--light-color);
+  min-height: 100vh;
+  left: 78px;
+  width: calc(100% - 78px);
+  transition: all 0.5s ease;
+  padding: 15px;
+  /* z-index: 1;  */
+}
+
+.sidebar.open ~ .main-content {
+  left: 250px;
+  width: calc(100% - 250px);
+}
+
+/* Dashboard Content */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--main-color);
+}
+
+.date-filter {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.date-filter input {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  outline: none;
+}
+
+.date-filter button {
+  padding: 8px 15px;
+  background: var(--main-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.date-filter button:hover {
+  background: var(--main-dark-color);
+}
+
