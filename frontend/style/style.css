@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap");
+
+/* ============== [ Global Variables ] ============= */
+:root {
+  --main-color: #003f5a;
+  --main-dark-color: #02344a;
+  --sec-color: #fcca0a;
+  --text-color: #333333;
+  --light-color: #e4e9f7;
+  --card-bg: #ffffff;
+  --hover-color: #f5f5f5;
+  --border-color: #dddddd;
+  --body-bg-color: #e4e9f7;
+  --white: #ffffff;
+}
