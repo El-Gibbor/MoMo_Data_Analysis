@@ -107,3 +107,21 @@
         <div class="card-value"></div>
       </div>
     </div>
+
+    <!-- Charts Area -->
+    <div class="dashboard-charts">
+      <!-- Transaction Volume Chart -->
+      <div class="chart-container">
+        <div class="chart-header">
+          <div class="chart-title">Transaction Volume by Month</div>
+          <div class="chart-actions">
+            <select id="volume-chart-type">
+              <option value="all">All Types</option>
+              <option value="deposits">Deposits</option>
+              <option value="withdrawals">Withdrawals</option>
+              <option value="payments">Payments</option>
+            </select>
+          </div>
+        </div>
+        <canvas id="volumeChart"></canvas>
+      </div>
