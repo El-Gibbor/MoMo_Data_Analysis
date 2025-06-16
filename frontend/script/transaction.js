@@ -54,3 +54,38 @@ async function loadTransactions() {
         hideLoading();
     }
 }
+
+// Display transactions in the table
+function displayTransactions(transactions) {
+    const tbody = document.querySelector('.transactions-table tbody');
+    if (!tbody) return;
+
+    if (!transactions || transactions.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 20px; color: #666;">
+                    No transactions found
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = transactions.map(transaction => {
+        const date = formatDate(transaction.date_and_time);
+        const amount = formatAmount(transaction.amount);
+        const status = getStatusBadge(transaction.status);
+        const type = formatTransactionType(transaction.transaction_type);
+        const description = getTransactionDescription(transaction);
+
+        return `
+            <tr onclick="openModal('${transaction.transaction_id}', ${JSON.stringify(transaction).replace(/"/g, '&quot;')})">
+                <td>${date}</td>
+                <td>${type}</td>
+                <td>${amount}</td>
+                <td>${description}</td>
+                <td>${status}</td>
+            </tr>
+        `;
+    }).join('');
+}
