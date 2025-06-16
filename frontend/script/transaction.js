@@ -412,3 +412,21 @@ function openModal(transactionId, transactionData) {
             </div>
         `;
     }
+
+     modal.style.display = 'block';
+}
+
+// ========== [Close modal ] ==============
+window.onclick = function (event) {
+    const modal = document.getElementById('transactionModal');
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+function closeModal() {
+    const modal = document.getElementById('transactionModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
