@@ -200,3 +200,28 @@ function setupEventListeners() {
         });
     }
 
+    // Type filter
+    const typeFilter = document.querySelector('#type-filter');
+    if (typeFilter) {
+        typeFilter.addEventListener('change', function (e) {
+            const value = e.target.value;
+            currentFilters.type = value === 'all' ? null : mapUITypeToAPI(value);
+            currentPage = 1;
+            loadTransactions();
+        });
+    }
+
+    // Date filter
+    const applyFilterBtn = document.querySelector('.date-filter button');
+    if (applyFilterBtn) {
+        applyFilterBtn.addEventListener('click', function () {
+            const startDate = document.querySelector('#start-date');
+            const endDate = document.querySelector('#end-date');
+
+            currentFilters.date_from = startDate.value || null;
+            currentFilters.date_to = endDate.value || null;
+            currentPage = 1;
+            loadTransactions();
+        });
+    }
+}
