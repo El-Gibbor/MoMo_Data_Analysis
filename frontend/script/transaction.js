@@ -10,3 +10,17 @@ document.addEventListener('DOMContentLoaded', function () {
     loadTransactions();
     setupEventListeners();
 });
+
+// Load transactions from API
+async function loadTransactions() {
+    if (isLoading) return;
+
+    isLoading = true;
+    showLoading();
+
+    try {
+        // Build query parameters
+        const params = new URLSearchParams({
+            page: currentPage,
+            per_page: perPage
+        });
