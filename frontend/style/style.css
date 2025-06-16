@@ -620,6 +620,7 @@ a:hover .text {
   z-index: 1000;
   opacity: 0;
   transition: opacity 0.3s ease;
+
 }
 
 canvas {
@@ -699,6 +700,7 @@ canvas {
 }
 
 .status.Unknown {
+
   background-color: #6c757d;
 }
 

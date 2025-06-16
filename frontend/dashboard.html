@@ -6,7 +6,9 @@
   <title>MTN MoMo | Data Analysis</title>
   <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <link rel="stylesheet" href="./style/style.css">
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
 </head>
 
@@ -17,7 +19,9 @@
         <span class="image">
           <img src="./assets/logo.png" alt="momo-logo">
         </span>
+
       </div>
+
 
     </header>
 
@@ -58,6 +62,7 @@
       <div class="bottom-content">
         <li class="">
           <a href="#">
+
           </a>
         </li>
       </div>
@@ -77,22 +82,30 @@
     <div class="summary-cards">
       <div class="card">
         <i class='bx bx-transfer card-icon'></i>
+
         <div class="card-title">Overall Total Transactions</div>
+
         <div class="card-value"></div>
       </div>
       <div class="card">
         <i class='bx bx-money card-icon'></i>
+
         <div class="card-title">Overall Total Volume</div>
+
         <div class="card-value"></div>
       </div>
       <div class="card">
         <i class='bx bx-trending-up card-icon'></i>
+
         <div class="card-title">Overall Average Amount</div>
+
         <div class="card-value"></div>
       </div>
       <div class="card">
         <i class='bx bx-bar-chart card-icon'></i>
+
         <div class="card-title">Overall Most Common Type</div>
+
         <div class="card-value"></div>
       </div>
     </div>
@@ -282,10 +295,12 @@
     <div class="transactions-section">
       <div class="transactions-header">
         <h3>Transactions Detail View</h3>
+
         <div class="search-filter">
           <input type="text" placeholder="Search transactions...">
           <select id="type-filter">
             <option value="all">All Types</option>
+
             <option value="Bundle purchase">Bundle purchases</option>
             <option value="Power bill payments">Power bill payments</option>
             <option value="Received funds">Incoming Money</option>
@@ -302,11 +317,15 @@
             <input type="date" id="end-date" value="">
             <button>Apply Filter</button>
           </div>
+
+
         </div>
       </div>
 
       <table class="transactions-table">
+
         <thead>
+
           <tr>
             <th>Date</th>
             <th>Transaction Type</th>
@@ -355,11 +374,13 @@
     </div>
   </div>
 
+
   <script src="./script/main.js.js"></script>
   <script src="./script/monthlyTx.js"></script>
   <script src="./script/transactions.js"></script>
   <script src="./script/volumeByType.js"></script>
   <script src="./script/distribution.js"></script>
+
 </body>
 
 </html>
