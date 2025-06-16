@@ -192,7 +192,7 @@ class Transaction:
     def _extract_transaction_id(self, body):
         """Extract transaction ID."""
 
-        txid_regex = r'(?:txid:|financial transaction id:\s*)(\d+)'
+        txid_regex = r'(?:tx(?:id)?|transaction\s*id|financial\s*transaction\s*id)[\s:]*(\d+)'
         txid_match = re.search(txid_regex, body)
 
         if txid_match:

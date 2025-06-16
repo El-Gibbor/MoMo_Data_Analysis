@@ -89,7 +89,7 @@ class TransactionProcessor:
             'power_bill_payment',
             'power_bill_payment.xml',
             'power_bill_payments.json',
-            'Payment to MoMo code'
+            'Power bill payments'
         )
 
     def third_party_transactions(self):
