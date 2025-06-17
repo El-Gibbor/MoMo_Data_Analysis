@@ -48,8 +48,6 @@ def get_transactions():
         status = request.args.get('status')
         date_from = request.args.get('date_from')
         date_to = request.args.get('date_to')
-        min_amount = request.args.get('min_amount')
-        max_amount = request.args.get('max_amount')
         search = request.args.get('search')
         query = session.query(Transaction)  # build the query
 
@@ -64,10 +62,6 @@ def get_transactions():
         if date_to:
             date_to_obj = datetime.strptime(date_to, '%Y-%m-%d')
             query = query.filter(Transaction.date_and_time <= date_to_obj)
-        # if min_amount:
-        #     query = query.filter(Transaction.amount >= float(min_amount))
-        # if max_amount:
-        #     query = query.filter(Transaction.amount <= float(max_amount))
         if search:
             query = query.filter(or_(
                 Transaction.description.contains(search),
