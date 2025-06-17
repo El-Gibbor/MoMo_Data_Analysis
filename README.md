@@ -63,7 +63,7 @@ For ease of access, both the **API** and the **dashboard** are deployed on **Ren
 - **Base URL**: [https://momo-data-analysis.onrender.com](https://momo-data-analysis.onrender.com)
 - You can directly test endpoints by appending them to the base URL.
 **Example**:  
-https://momo-data-api.onrender.com/api/summary
+https://momo-data-analysis.onrender.com/api/summary
 ### 🔗 Live Dashboard (Render Static Site)
 - **Dashboard URL**: [https://grp-45-momo-data.onrender.com](https://grp-45-momo-data.onrender.com)  
   This dashboard is statically hosted and visualizes transaction insights by consuming data from the live API.
