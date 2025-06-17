@@ -1,26 +1,81 @@
 # MTN MoMo Data (SMS) | Analysis Dashboard
 This project transforms a dense XML archive of 1,600 MTN MoMo SMS transactions ranging from airtime purchases and bill payments to money transfers into a full-stack web app that reveals patterns, activity types, and transactional flows across Rwanda’s mobile money ecosystem.
 Exercising full-stack proficiency; backend workflows, structured data storage, and user interface design
-###  Video Demo and Report
-[Video](https://www.youtube.com/watch?v=yro1_2dKy_I) | [Report](https://docs.google.com/document/d/1sqXJ4gRY-Eo4zMs1R8QItTE4GG4wq6HnPQnjzrH29f8/edit?usp=sharing)
+###  Demos and Report
+[Video Demo](https://www.youtube.com/watch?v=yro1_2dKy_I) | [Live Demo](https://grp-45-momo-data.onrender.com) | [Report](https://docs.google.com/document/d/1sqXJ4gRY-Eo4zMs1R8QItTE4GG4wq6HnPQnjzrH29f8/edit?usp=sharing)
 ## The task is to:
 - [x] Clean and categorize raw SMS data in an xml file
 - [x] Store the data in a relational database
-- [x] Build an interactive frontend dashboard to analyze the data
 - [x] Develop a backend API (Flask) to fetch data from the database for the frontend.
+- [x] Build an interactive frontend dashboard to analyze the data
 
-## Tasks in Detail
-- **Data Cleaning & Processing:**
-  - Parse the XML using Python ml.etree.ElementTree library
-  - Categorize SMS by transaction type (e.g., payments, deposits, withdrawals)
-  - Normalize fields (amounts, dates, phone numbers), and
-  - Log unprocessed messages.
-- **Database Design:**
-  - Design a relational schema (SMySQL) to store cleaned transactions with fields like ID, type, amount, parties, and timestamp.
-  - Ensure data integrity, Handle duplicates, and insert via script.
-- **Frontend Dashboard:**
-  - Build an interactive dashboard (HTML/CSS/JS) with
-  - Search, filters, and data visualizations (e.g., volume by type, monthly summaries) using libraries like Chart.js
-- **Backend API:**
-  - Create a REST API (Flask) to serve all, filtered, or summarized transactions.
-  - Connect it to the dashboard with async requests.
+## Data Processing Pipeline
+- `backend/data/`  
+  This directory is the heart of the project’s ETL (Extract, Transform, Load) process. It is structured into three main stages:
+  - `raw_data/modified_sms_v2.xml` Contains unprocessed SMS transaction messages exported from a mobile device. These messages include various mobile money transactions such as deposits, withdrawals, airtime purchases, and more.  
+ - **Data Extraction** → `data_extraction/`  
+   This stage is responsible for parsing and categorizing raw SMS data. with the `categorize_data.py` module. Extracts and assigns each SMS message to a specific transaction type using a rule-based keyword matching.
+    - `sms_category/`:
+      Contains output XML files for each transaction category (e.g., bank_transfers.xml, bundle_purchases.xml, incoming_money.xml) after categorization (executing categorize_dat.py).
+  - **Data Cleaning & Structuring** → `data_cleaning/`  
+This is where raw, categorized data gets cleaned and transformed into structured JSON format ready for database insertion.  
+    - Key Files:
+        - `transaction_configs.py`: Configuration file that defines how each transaction type should be parsed (which regex pattern to apply).
+        - `data_cleaner.py`: Applies specific parsing logic using the config file and extracts fields like amount, date, sender, receiver, etc., from transaction messages.
+        - `use_data_cleaner.py`: Entry script that runs the cleaning process on categorized data.
+        - `cleaned_data/`: Stores final JSON output files (e.g., airtime_payment.json, withdrawal_from_agents.json). Theses are files ready to be loaded into the database
+- **Data Flow Summary** (ETL)  
+```
+raw_data/modified_sms_v2.xml 
+    ↓
+data_extraction/categorize_data.py
+    ↓
+data_extraction/sms_category/*.xml (categorized)
+    ↓
+data_cleaning/data_cleaner.py + transaction_configs.py
+    ↓
+data_cleaning/cleaned_data/*.json (cleaned structured output)
+```  
+- **Sample Use case** - To extract, clean, and prepare the data:
+```
+# Step 1: Extract and Categorize
+cd backend/data/data_extraction
+python categorize_data.py
+
+# Step 2: Clean and Structure
+cd ../data_cleaning
+python use_data_cleaner.py
+```
+The resulting JSON files in cleaned_data/ can then be loaded into your database using the `load_db.py` script in `backend/api`.  
+## API Endpoints
+The Flask API is deployed at: https://momo-data-analysis.onrender.com
+| Routes                                        | Description                                                                                             |
+|--------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| `/api/transactions`                          | Fetch paginated transactions. Query params: `page`, `per_page`, `type`, `date_from`, `date_to`, `search`. |
+| `/api/summary`                               | total transactions, volume, average amount, most common type.                      |
+| `/api/summary/vol-by-type`                   | Total volume per `transaction_type`. Optional filters: `date_from`, `date_to`.                         |
+| `/api/summary/monthly`                       | Monthly aggregated volume. Optional filters: `year`, `month`, `transaction_type`.                      |
+| `/api/summary/group`   | Count and total volume by categories (deposit vs payments)                                                         |
+
+## Live Demo
+For ease of access, both the **API** and the **dashboard** are deployed on **Render**:
+### 🔗 Live API (Render Backend)
+- **Base URL**: [https://momo-data-analysis.onrender.com](https://momo-data-analysis.onrender.com)
+- You can directly test endpoints by appending them to the base URL.
+**Example**:  
+https://momo-data-api.onrender.com/api/summary
+### 🔗 Live Dashboard (Render Static Site)
+- **Dashboard URL**: [https://grp-45-momo-data.onrender.com](https://grp-45-momo-data.onrender.com)  
+  This dashboard is statically hosted and visualizes transaction insights by consuming data from the live API.
+
+## ⚠️ Important Notice
+This project uses **Render's free-tier PostgreSQL** database for continuous access to transaction data.
+- **Database Sleep Mode**:
+  On the free plan, if the API or database is not pinged regularly, the service goes to sleep. When this happens, the **first API request may take a long time** (up to 40 seconds) as the service wakes up.
+- **Deletion Warning**:
+  Render has notified that **this free-tier database will be deleted after July 10** unless the account is upgraded to a paid plan.
+- **No Data After July 10?**  
+  If you're checking this project **on or after July 10th** and cannot access any transaction data, it's likely because the database was deleted by Render due to the free-tier policy.
+
+
+
