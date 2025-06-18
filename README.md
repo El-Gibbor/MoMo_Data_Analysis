@@ -47,35 +47,37 @@ cd ../data_cleaning
 python use_data_cleaner.py
 ```
 The resulting JSON files in cleaned_data/ can then be loaded into your database using the `load_db.py` script in `backend/api`.  
-## API Endpoints
-The Flask API is deployed at: https://momo-data-analysis.onrender.com
-| Routes                                        | Description                                                                                             |
-|--------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| `/api/transactions`                          | Fetch paginated transactions. Query params: `page`, `per_page`, `type`, `date_from`, `date_to`, `search`. |
-| `/api/summary`                               | total transactions, volume, average amount, most common type.                      |
-| `/api/summary/vol-by-type`                   | Total volume per `transaction_type`. Optional filters: `date_from`, `date_to`.                         |
-| `/api/summary/monthly`                       | Monthly aggregated volume. Optional filters: `year`, `month`, `transaction_type`.                      |
-| `/api/summary/group`   | Count and total volume by categories (deposit vs payments)                                                         |
+## API Endpoints (Live)
+For ease of access, both the **API** and the **dashboard** are deployed on **Render**:  
+The Flask API is deployed at: https://momo-data-analysis.onrender.com and you can use this base url to build a query parameter for each endpoint
+| Endpoint                           | Description                                                                                          | Query Parameters Example                                                                 |
+|------------------------------------|------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| `/api/transactions`                | Fetch paginated transactions. Supports filters like type, status, search, and date range.           | `?page=1&per_page=20&type=Bank%20deposit&date_from=2024-01-01&date_to=2024-12-30`         |
+| `/api/summary`                     | Returns total number of transactions, total volume, average amount, and most common type.           | No parameters required. Just use `/api/summary`                                           |
+| `/api/summary/vol-by-type`        | Returns total volume grouped by `transaction_type`. Can be filtered by date range.                  | `?date_from=2024-01-01&date_to=2024-06-30`                                                |
+| `/api/summary/monthly`            | Returns monthly aggregated volume. Supports optional filters for year and transaction type.         | `?year=2024&type=Withdrawal%20from%20agent`                                               |
+| `/api/summary/group`              | Returns count and volume grouped by high-level categories (e.g., deposit, payment).                 | `?date_from=2024-01-01&date_to=2024-06-30`                                                |
 
-## Live Demo
-For ease of access, both the **API** and the **dashboard** are deployed on **Render**:
-### 🔗 Live API (Render Backend)
-- **Base URL**: [https://momo-data-analysis.onrender.com](https://momo-data-analysis.onrender.com)
-- You can directly test endpoints by appending them to the base URL.
+You can now directly test endpoints by appending them to the base URL together with the optional query params.  
 **Example**:  
-https://momo-data-analysis.onrender.com/api/summary
-### 🔗 Live Dashboard (Render Static Site)
+  https://momo-data-analysis.onrender.com/api/transactions?page=1&per_page=20&type=Bank%20deposit&date_from=2024-01-01&date_to=2024-12-30
+## Live Demo
+### Live Dashboard (Render static site)
 - **Dashboard URL**: [https://grp-45-momo-data.onrender.com](https://grp-45-momo-data.onrender.com)  
-  This dashboard is statically hosted and visualizes transaction insights by consuming data from the live API.
+  This dashboard is statically hosted and visualizes transaction insights by consuming data from the live API. You can explore it through the link above or you can run it locally: ⬇️  
+``` 
+git clone https://github.com/El-Gibbor/MoMo_Data_Analysis.git
+cd MoMo_Data_Analysis/frontend
+
+# step 2:
+# Open the index.html file in your browser
+```
 
 ## ⚠️ Important Notice
 This project uses **Render's free-tier PostgreSQL** database for continuous access to transaction data.
-- **Database Sleep Mode**:
+- **Database Sleep Mode**:  
   On the free plan, if the API or database is not pinged regularly, the service goes to sleep. When this happens, the **first API request may take a long time** (up to 40 seconds) as the service wakes up.
-- **Deletion Warning**:
+- **Deletion Warning**:  
   Render has notified that **this free-tier database will be deleted after July 10** unless the account is upgraded to a paid plan.
 - **No Data After July 10?**  
   If you're checking this project **on or after July 10th** and cannot access any transaction data, it's likely because the database was deleted by Render due to the free-tier policy.
-
-
-
