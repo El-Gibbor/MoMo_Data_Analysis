@@ -13,6 +13,9 @@
 </head>
 
 <body>
+  <div id="page-loader-overlay">
+    <div class="spinner"></div>
+  </div>
   <nav class="sidebar">
     <header>
       <div class="image-text">
@@ -361,9 +364,17 @@
   </div>
 
   <script src="./script/monthlyTx.js"></script>
+  <script src="./script/loader.js"></script>
   <script src="./script/transactions.js"></script>
   <script src="./script/volumeByType.js"></script>
   <script src="./script/distribution.js"></script>
+
+  <script>
+    const pageLoaderOverlay = document.getElementById('page-loader-overlay');
+    window.addEventListener('load', () => {
+      pageLoaderOverlay.style.display = 'none';
+    });
+  </script>
 </body>
 
 </html>
